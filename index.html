@@ -29,27 +29,27 @@
       <input type="text" name="" id="searchInput" placeholder="i dont work">
       <button type="button" class="btn btn-primary" onclick="search()">Ieškoti</button>
       <!-- Button trigger modal -->
-      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal">I'm a button</button>
+      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="clearID()">I'm a button</button>
 
     </div>
 
-    
+
     <main class="main">
-      
+
     </main>
     <aside class="aside aside1">im useless</aside>
     <aside class="aside aside2">im useless too</aside>
     <footer class="footer">
-            I'm a footer. I want to be useful someday.
+      I'm a footer. I want to be useful someday.
     </footer>
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
   </div>
 
 
@@ -65,18 +65,57 @@
           </button>
         </div>
         <div class="modal-body">
-          <input id="input" type="text" placeholder="name">
-          <input id="property1" type="text" placeholder="property1">
-          <input id="property2" type="text" placeholder="property2">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="storeInput(), printInput()">Saugoti</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Atšaukti</button>
+
+
+          <table class="table">
+
+            <tr>
+
+              <td class="col-md-4">
+                <span>Input name here</span>
+
+              </td>
+
+              <td class="col-md-8">
+                <input id="input" type="text" placeholder="name">
+              </td>
+
+
+
+            </tr>
+
+            <tr>
+              <td>
+                <span>First property here</span>
+              </td>
+              <td>
+                <input id="property1" type="text" placeholder="property1">
+              </td>
+            </tr>
+
+
+            <tr>
+              <td>
+                <span>Second property here</span>
+              </td>
+              <td>
+                <input id="property2" type="text" placeholder="property2">
+              </td>
+            </tr>
+
+
+          </table>
+
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-danger" onclick="deleteCard()">Ištrinti</button>
+            <button type="button" class="btn btn-primary" onclick="storeInput(), printInput(), clearInputs()">Saugoti</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atšaukti</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

@@ -31,6 +31,7 @@ header {
 #creatorButton {
 	margin-left: auto;
 }
+
 @media all and (min-width: 600px) {
 	.aside {
 		flex: 1 auto;
@@ -39,7 +40,7 @@ header {
 
 @media all and (min-width: 800px) {
 	.main {
-		flex: 5 0px;
+		flex: 8 0px;
 	}
 	.aside1 {
 		order: 1;
@@ -60,7 +61,6 @@ header {
 }
 
 .main {
-	
 	min-height: calc(100vh - 204px);
 	background-color: white;
 	display: flex;
@@ -68,11 +68,25 @@ header {
 	align-content: flex-start;
 }
 
-.main > * {
+.main>* {
 	background-color: white;
-	margin: 2px;
+	margin: 3px;
 	padding: 5px;
 	box-shadow: 5px 5px 4px #888888;
+	height: 200px;
+	color: black;
+}
+
+.main>*:hover {
+	text-decoration: none;
+	color: black;
+	margin-top: -1px;
+}
+
+.main>*:focus {
+	text-decoration: none;
+	color: black;
+	margin-top: -1px;
 }
 
 .main ul {
@@ -81,12 +95,13 @@ header {
 
 .main ul li {
 	list-style: none;
-
 }
 
 .footer {
-
 	height: 50px;
 	background-color: beige;
+}
 
+.table tr td {
+	width: 100%;
 }

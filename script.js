@@ -1,14 +1,42 @@
-let dataArray = [];
+let dataArray = [],
+    counter = 0,
+    targetID = '',
+    checkArray = [];
+
 
 function storeInput() {
     let inputName = document.getElementById('input').value;
     let inputProperty1 = document.getElementById('property1').value;
     let inputProperty2 = document.getElementById('property2').value;
-    dataArray.push({
-        name: inputName,
-        property1: inputProperty1
-    });
-    localStorage.setItem('dataArray', JSON.stringify(dataArray));
+    // jei dataArray[targetID] = "" // push // else splice? array.splice(4+1, 1, 'kuo keiciam');
+
+    console.log(targetID)
+    if (localStorage.getItem('dataArray')) {
+        checkArray = JSON.parse(localStorage.getItem('dataArray'));
+        counter = checkArray.length;
+    } else {
+        checkArray = [];
+    }
+
+    if (typeof checkArray[targetID] == 'undefined') {
+
+        dataArray.push({
+            id: counter,
+            name: inputName,
+            property1: inputProperty1,
+            property2: inputProperty2
+        });
+        localStorage.setItem('dataArray', JSON.stringify(dataArray));
+        $('#promptModal').modal('hide');
+        counter++;
+    } else {
+
+        dataArray[targetID].name = inputName;
+        dataArray[targetID].property1 = inputProperty1;
+        dataArray[targetID].property2 = inputProperty2;
+        localStorage.setItem('dataArray', JSON.stringify(dataArray));
+        $('#promptModal').modal('hide');
+    }
 }
 
 function printInput() {
@@ -17,28 +45,41 @@ function printInput() {
     for (const entry of dataArray) {
 
         printOut += `
-    <div>
+        <a data-toggle="modal" href="#promptModal" onclick="populateModal()" id="${entry.id}"><div> 
         <ul> Pavadinimas:            ${entry.name}
             <li> Propertis1: ${entry.property1}</li>
             <li> Propertis2: ${entry.property2}</li>
         </ul>
-    </div>
+        </div>
+        </a>
 `
 
         //todo print a li for every non empty property?
 
     }
     destination.innerHTML = printOut;
+
+
+}
+
+function clearInputs() {
+    document.getElementById('input').value = "";
+    document.getElementById('property1').value = "";
+    document.getElementById('property2').value = "";
 }
 
 
 function render() {
     if (localStorage.getItem('dataArray')) {
         dataArray = JSON.parse(localStorage.getItem('dataArray'));
+        counter = dataArray.length;
         printInput();
     }
 }
 render();
+
+
+
 
 
 function search() {
@@ -49,4 +90,43 @@ function search() {
     // return item.VAL.indexOf(searchText)>-1;
     // });
     // console.log(results);
+}
+
+
+
+
+function populateModal() {
+    console.log('i work');
+    dataArray = JSON.parse(localStorage.getItem('dataArray'));
+    document.getElementById('input').value = dataArray[targetID].name;
+    document.getElementById('property1').value = dataArray[targetID].property1;
+    document.getElementById('property2').value = dataArray[targetID].property2;
+}
+
+function getID(e) {
+    targetID = e.target.id;
+    console.log(targetID);
+}
+
+document.querySelector('.main').addEventListener('mouseover', getID, false);
+document.querySelector('.main').addEventListener('focus', getID, true);
+
+function clearID() {
+    targetID = ''
+}
+
+
+function deleteCard() {
+
+    let confirmation = confirm('Ar tikrai norite ištrinti šią kortelę?');
+
+    if (confirmation == true) {
+        console.log('taip');
+        dataArray.splice(targetID, 1);
+        localStorage.setItem('dataArray', JSON.stringify(dataArray));
+    }
+    console.log(dataArray);
+    $('#promptModal').modal('hide');
+    render();
+
 }
