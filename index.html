@@ -29,7 +29,7 @@
       <input type="text" name="" id="searchInput" placeholder="i dont work">
       <button type="button" class="btn btn-primary" onclick="search()">Ieškoti</button>
       <!-- Button trigger modal -->
-      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="clearID()">I'm a button</button>
+      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="clearInputs()">I'm a button</button>
 
     </div>
 
@@ -108,7 +108,7 @@
 
 
           <div class="modal-footer">
-              <button type="button" class="btn btn-danger" onclick="deleteCard()">Ištrinti</button>
+              <button type="button" class="btn btn-danger" onclick="deleteCard()" id="deleteButton">Ištrinti</button>
             <button type="button" class="btn btn-primary" onclick="storeInput(), printInput(), clearInputs()">Saugoti</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Atšaukti</button>
           </div>

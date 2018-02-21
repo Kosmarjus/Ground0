@@ -2,22 +2,24 @@ let dataArray = [],
     targetID = '',
     checkArray = [];
 
-
 function storeInput() {
     let inputName = document.getElementById('input').value;
     let inputProperty1 = document.getElementById('property1').value;
     let inputProperty2 = document.getElementById('property2').value;
-    // jei dataArray[targetID] = "" // push // else splice? array.splice(4+1, 1, 'kuo keiciam');
 
-    console.log(targetID)
+
     if (localStorage.getItem('dataArray')) {
         checkArray = JSON.parse(localStorage.getItem('dataArray'));
-       } else {
+    } else {
         checkArray = [];
     }
 
-    if (typeof checkArray[targetID] == 'undefined') {
-   
+    var result = dataArray.filter(function (obj) {
+        return obj.id == targetID;
+    })[0];
+
+
+    if (typeof result == 'undefined' || typeof result.id == 'undefined') { //store new input
         dataArray.push({
             id: Date.now(),
             name: inputName,
@@ -27,11 +29,11 @@ function storeInput() {
         localStorage.setItem('dataArray', JSON.stringify(dataArray));
         $('#promptModal').modal('hide');
 
-    } else {
-
-        dataArray[targetID].name = inputName;
-        dataArray[targetID].property1 = inputProperty1;
-        dataArray[targetID].property2 = inputProperty2;
+    } else { //update current input
+        console.log('aktyus senas' + result.id);
+        result.name = inputName;
+        result.property1 = inputProperty1;
+        result.property2 = inputProperty2;
         localStorage.setItem('dataArray', JSON.stringify(dataArray));
         $('#promptModal').modal('hide');
     }
@@ -51,36 +53,27 @@ function printInput() {
         </div>
         </a>
 `
-
-        //todo print a li for every non empty property?
-
     }
     destination.innerHTML = printOut;
-
-
 }
 
 function clearInputs() {
     document.getElementById('input').value = "";
     document.getElementById('property1').value = "";
     document.getElementById('property2').value = "";
+    document.getElementById('deleteButton').style.visibility = 'hidden';
 }
-
 
 function render() {
     if (localStorage.getItem('dataArray')) {
         dataArray = JSON.parse(localStorage.getItem('dataArray'));
 
-        counter = +dataArray[dataArray.length-1].id;
+        // counter = +dataArray[dataArray.length-1].id;
 
         printInput();
     }
 }
 render();
-
-
-
-
 
 function search() {
     // let searchText = document.getElementById('searchInput').value;
@@ -92,20 +85,21 @@ function search() {
     // console.log(results);
 }
 
-
-
-
 function populateModal() {
     console.log('i work');
     dataArray = JSON.parse(localStorage.getItem('dataArray'));
 
-    let activeItem = dataArray.filter(function(item){
-        return item.id == targetID;
-    })[0];
 
-    document.getElementById('input').value = activeItem.name;
-    document.getElementById('property1').value = activeItem.property1;
-    document.getElementById('property2').value = activeItem.property2;
+    var result = dataArray.filter(function (obj) {
+        return obj.id == targetID;
+    })[0];
+    console.log('amagad' + result.id);
+
+    document.getElementById('input').value = result.name;
+    document.getElementById('property1').value = result.property1;
+    document.getElementById('property2').value = result.property2;
+
+    document.getElementById('deleteButton').style.visibility = 'visible';
 }
 
 function getID(e) {
@@ -116,18 +110,18 @@ function getID(e) {
 document.querySelector('.main').addEventListener('mouseover', getID, false);
 document.querySelector('.main').addEventListener('focus', getID, true);
 
-function clearID() {
-    targetID = ''
-}
-
-
 function deleteCard() {
 
     let confirmation = confirm('Ar tikrai norite ištrinti šią kortelę?');
 
     if (confirmation == true) {
         console.log('taip');
-        dataArray.splice(targetID, 1);
+
+        var result = dataArray.filter(function (obj) {
+            return obj.id == targetID;
+        })[0];
+        console.log('pzpzpzppz' + result.id)
+        dataArray.splice(dataArray.findIndex(p => p.id == result.id), 1);
         localStorage.setItem('dataArray', JSON.stringify(dataArray));
     }
     console.log(dataArray);
