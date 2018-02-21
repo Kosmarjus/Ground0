@@ -55,6 +55,10 @@ header {
 	}
 }
 
+.aside {
+	background-color: lightslategrey;
+}
+
 .main {
 	
 	min-height: calc(100vh - 204px);
