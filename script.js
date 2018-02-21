@@ -1,6 +1,5 @@
 let dataArray = [],
     targetID = '',
-    counter,
     checkArray = [];
 
 
@@ -20,7 +19,7 @@ function storeInput() {
     if (typeof checkArray[targetID] == 'undefined') {
    
         dataArray.push({
-            id: _.uniqueId(),
+            id: Date.now(),
             name: inputName,
             property1: inputProperty1,
             property2: inputProperty2
