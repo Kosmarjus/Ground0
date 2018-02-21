@@ -1,7 +1,7 @@
 let dataArray = [],
     targetID = '';
 
-//random ID generatorius
+//random ID generatorius (specialiai Andriui vietoje timestamp'o)
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -14,7 +14,7 @@ function storeInput() {
     let inputProperty1 = document.getElementById('property1').value;
     let inputProperty2 = document.getElementById('property2').value;
 
-    var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal ID
+    var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
         return obj.id == targetID;
     })[0];
 
@@ -42,13 +42,13 @@ function storeInput() {
 
 
 //f-ja irasu spausdinimui i .main klase
-function printInput() { 
+function printInput() {
     let destination = document.querySelector('.main');
     let printOut = '';
     for (const entry of dataArray) {
 
         printOut += `
-        <a data-toggle="modal" href="#promptModal" onclick="populateModal()" id="${entry.id}"><div> 
+        <a class="containerBox" data-toggle="modal" href="#promptModal" onclick="populateModal()" id="${entry.id}"><div> 
         <ul> Pavadinimas:            ${entry.name}
             <li> Propertis1: ${entry.property1}</li>
             <li> Propertis2: ${entry.property2}</li>
@@ -78,26 +78,17 @@ function render() {
 }
 render();
 
-function search() {
-    // let searchText = document.getElementById('searchInput').value;
-    // dataArray =  JSON.parse(localStorage.getItem('dataArray'));
-
-    // var results=dataArray.filter(function(item){
-    // return item.VAL.indexOf(searchText)>-1;
-    // });
-    // console.log(results);
-}
 
 //f-ja modalinio lango uzpildymui
 function populateModal() {
 
     dataArray = JSON.parse(localStorage.getItem('dataArray'));
 
-    var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal ID
-        return obj.id == targetID;  
+    var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
+        return obj.id == targetID;
     })[0];
 
-    document.getElementById('input').value = result.name;
+    document.getElementById('input').value = result.name; //priskiriame inputams vertes is dataArray
     document.getElementById('property1').value = result.property1;
     document.getElementById('property2').value = result.property2;
 
@@ -116,14 +107,13 @@ document.querySelector('.main').addEventListener('focus', getID, true);
 
 
 
-
-
 //trynimo mygtuko funkcija
 function deleteCard() {
 
     let confirmation = confirm('Ar tikrai norite ištrinti šią kortelę?');
     if (confirmation == true) {
-        var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal ID
+
+        var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
             return obj.id == targetID;
         })[0];
 
@@ -133,3 +123,13 @@ function deleteCard() {
     $('#promptModal').modal('hide'); //slepiam modalini langa po mygtuko paspaudimo
     render(); //atnaujinam ekrana
 }
+
+
+//search filter JSON black magic
+$("#searchInput").on("keyup", function () {
+    var g = $(this).val().toLowerCase();
+    $(".main a div ul").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.containerBox')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
