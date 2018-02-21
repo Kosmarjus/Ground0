@@ -18,7 +18,6 @@ function storeInput() {
         return obj.id == targetID;
     })[0];
 
-
     if (typeof result == 'undefined' || typeof result.id == 'undefined') { //jei nera irasu - kuriam naujus
         dataArray.push({
             id: uuidv4(),
@@ -32,8 +31,6 @@ function storeInput() {
         result.name = inputName;
         result.property1 = inputProperty1;
         result.property2 = inputProperty2;
-
-
     }
 
     localStorage.setItem('dataArray', JSON.stringify(dataArray)); //stumiam i localstorage
@@ -60,7 +57,6 @@ function printInput() {
     destination.innerHTML = printOut;
 }
 
-
 //funkcija modalinio lango lauku isvalymui 
 function clearInputs() {
     document.getElementById('input').value = "";
@@ -78,7 +74,6 @@ function render() {
 }
 render();
 
-
 //f-ja modalinio lango uzpildymui
 function populateModal() {
 
@@ -95,7 +90,6 @@ function populateModal() {
     document.getElementById('deleteButton').style.visibility = 'visible'; //redaguojant irasa - padarome mygtuka delete matoma
 }
 
-
 //funkcija targetID paemimui
 function getID(e) {
     targetID = e.target.id;
@@ -103,9 +97,6 @@ function getID(e) {
 //targetID trigeriai
 document.querySelector('.main').addEventListener('mouseover', getID, false);
 document.querySelector('.main').addEventListener('focus', getID, true);
-
-
-
 
 //trynimo mygtuko funkcija
 function deleteCard() {
@@ -124,8 +115,7 @@ function deleteCard() {
     render(); //atnaujinam ekrana
 }
 
-
-//search filter JSON black magic
+//search filter tired of making it work with native JS, adapted some stack overflow JSON black magic
 $("#searchInput").on("keyup", function () {
     var g = $(this).val().toLowerCase();
     $(".main a div ul").each(function () {

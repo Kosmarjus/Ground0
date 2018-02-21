@@ -108,4 +108,5 @@ header {
 
 #deleteButton {
 	visibility: hidden;
+	margin-right: auto;
 }
