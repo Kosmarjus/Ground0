@@ -1,19 +1,80 @@
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  <body>
-    <div class="container">
+<body>
+  <div class="container">
+
+    <header class="header">
+      <h2>My whatever here</h2>
+
+    </header>
+
+    <div class="navbar">
+
+      <input type="text" name="" id="searchInput" placeholder="i dont work">
+      <button type="button" class="btn btn-primary" onclick="search()">Ieškoti</button>
+      <!-- Button trigger modal -->
+      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal">I'm a button</button>
 
     </div>
-    <script src="script.js"></script>
-  </body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="promptModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="promptModalTitle">Insert stuff here</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input id="input" type="text" placeholder="name">
+            <input id="property1" type="text" placeholder="property1">
+            <input id="property2" type="text" placeholder="property2">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="storeInput(), printInput()">Saugoti</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atšaukti</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="main">
+
+    </main>
+    <aside class="aside aside1">im useless</aside>
+    <aside class="aside aside2">im useless too</aside>
+    <footer class="footer">
+
+      footer here
+    </footer>
+
+
+
+
+
+
+
+
+  </div>
+  <script src="script.js"></script>
+</body>
 
 </html>

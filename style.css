@@ -1,0 +1,88 @@
+html,
+body {
+	margin: 0;
+	min-height: 100vh;
+}
+
+.container {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.container>* {
+	flex: 1 100%;
+}
+
+header {
+	height: 100px;
+	background-color: aquamarine;
+}
+
+.navbar {
+	background-color: bisque;
+	display: flex;
+	justify-content: flex-start;
+}
+
+#searchInput {
+	margin-right: 10px;
+}
+
+#creatorButton {
+	margin-left: auto;
+}
+@media all and (min-width: 600px) {
+	.aside {
+		flex: 1 auto;
+	}
+}
+
+@media all and (min-width: 800px) {
+	.main {
+		flex: 5 0px;
+	}
+	.aside1 {
+		order: 1;
+	}
+	.main {
+		order: 2;
+	}
+	.aside2 {
+		order: 3;
+	}
+	.footer {
+		order: 4;
+	}
+}
+
+.main {
+	
+	min-height: calc(100vh - 204px);
+	background-color: white;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+}
+
+.main > * {
+	background-color: white;
+	margin: 2px;
+	padding: 5px;
+	box-shadow: 5px 5px 4px #888888;
+}
+
+.main ul {
+	padding: 0;
+}
+
+.main ul li {
+	list-style: none;
+
+}
+
+.footer {
+
+	height: 50px;
+	background-color: beige;
+
+}
