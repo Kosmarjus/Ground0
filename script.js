@@ -1,6 +1,6 @@
 let dataArray = [],
-    counter = 0,
     targetID = '',
+    counter,
     checkArray = [];
 
 
@@ -13,22 +13,21 @@ function storeInput() {
     console.log(targetID)
     if (localStorage.getItem('dataArray')) {
         checkArray = JSON.parse(localStorage.getItem('dataArray'));
-        counter = checkArray.length;
-    } else {
+       } else {
         checkArray = [];
     }
 
     if (typeof checkArray[targetID] == 'undefined') {
-
+   
         dataArray.push({
-            id: counter,
+            id: _.uniqueId(),
             name: inputName,
             property1: inputProperty1,
             property2: inputProperty2
         });
         localStorage.setItem('dataArray', JSON.stringify(dataArray));
         $('#promptModal').modal('hide');
-        counter++;
+
     } else {
 
         dataArray[targetID].name = inputName;
@@ -72,7 +71,9 @@ function clearInputs() {
 function render() {
     if (localStorage.getItem('dataArray')) {
         dataArray = JSON.parse(localStorage.getItem('dataArray'));
-        counter = dataArray.length;
+
+        counter = +dataArray[dataArray.length-1].id;
+
         printInput();
     }
 }
@@ -98,9 +99,14 @@ function search() {
 function populateModal() {
     console.log('i work');
     dataArray = JSON.parse(localStorage.getItem('dataArray'));
-    document.getElementById('input').value = dataArray[targetID].name;
-    document.getElementById('property1').value = dataArray[targetID].property1;
-    document.getElementById('property2').value = dataArray[targetID].property2;
+
+    let activeItem = dataArray.filter(function(item){
+        return item.id == targetID;
+    })[0];
+
+    document.getElementById('input').value = activeItem.name;
+    document.getElementById('property1').value = activeItem.property1;
+    document.getElementById('property2').value = activeItem.property2;
 }
 
 function getID(e) {
