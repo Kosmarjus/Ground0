@@ -29,7 +29,7 @@
       <input type="text" name="" id="searchInput" placeholder="Search filter here">
       <!-- <button type="button" class="btn btn-primary" onclick="search()">Ieškoti</button> -->
       <!-- Button trigger modal -->
-      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="clearInputs()">Create stuff</button>
+      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="clearInputs(), clearID()">Create stuff</button>
 
     </div>
 
@@ -37,8 +37,8 @@
     <main class="main">
 
     </main>
-    <aside class="aside aside1">im useless</aside>
-    <aside class="aside aside2">im useless too</aside>
+    <!-- <aside class="aside aside1">im useless</aside>
+    <aside class="aside aside2">im useless too</aside> -->
     <footer class="footer">
       I'm a footer. I want to be useful someday.
     </footer>
@@ -103,6 +103,14 @@
               </td>
             </tr>
 
+            <tr>
+              <td>Image selection here</span>
+              </td>
+              <td>
+                <input id="img" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="renderImage(this)">
+                <img id="showimage" src="#" alt="selected image">
+              </td>
+            </tr>
 
           </table>
 
@@ -110,12 +118,12 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" onclick="deleteCard()" id="deleteButton">Ištrinti</button>
             <button type="button" class="btn btn-primary" onclick="storeInput(), printInput(), clearInputs()">Saugoti</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atšaukti</button>
+            <button type="button" class="btn btn-secondary" onclick="render()" data-dismiss="modal">Atšaukti</button>
           </div>
         </div>
       </div>
     </div>
-    <script src="node_modules/lodash/lodash.js"></script>
+
     <script src="script.js"></script>
 </body>
 

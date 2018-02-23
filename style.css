@@ -68,16 +68,16 @@ header {
 	align-content: flex-start;
 }
 
-.main>* {
+.main > * {
 	background-color: white;
 	margin: 3px;
 	padding: 5px;
+	height: 344px;
 	box-shadow: 5px 5px 4px #888888;
-	height: 200px;
 	color: black;
 }
 
-.main>*:hover {
+.main > *:hover {
 	text-decoration: none;
 	color: black;
 	margin-top: -1px;
@@ -92,7 +92,7 @@ header {
 .main ul {
 	padding: 0;
 }
-
+ 
 .main ul li {
 	list-style: none;
 }
@@ -109,4 +109,8 @@ header {
 #deleteButton {
 	visibility: hidden;
 	margin-right: auto;
+}
+
+#showimage {
+	visibility: hidden;
 }
