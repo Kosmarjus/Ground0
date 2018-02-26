@@ -25,7 +25,7 @@ function storeInput() {
         newAlbum.image = 'images/' + document.getElementById('img').files[0].name;
     }
 
-    fetch("http://localhost:3066/albums", {
+    fetch("http://localhost:3000/albums", {
         method: "POST",
         headers: {
             'content-type': 'application/json'
@@ -176,7 +176,7 @@ $("#searchInput").on("keyup", function () {
 loadServerData();
 
 function loadServerData() {
-    fetch("http://localhost:3066/albums").then(function (response) {
+    fetch("http://localhost:3000/albums").then(function (response) {
         response.json().then(function (data) {
             dataArray = data;
             // console.log(dataArray);
