@@ -1,0 +1,30 @@
+{
+  "albums": [
+    {
+      "id": 1,
+      "name": "atlikejas",
+      "property1": "albumas",
+      "property2": "metai",
+      "image": "images/default.png"
+    },
+    {
+      "name": "456",
+      "property1": "654",
+      "property2": "654",
+      "image": "images/4.png",
+      "id": 2
+    },
+    {
+      "name": "tets",
+      "property1": "fgh",
+      "property2": "",
+      "id": 3
+    },
+    {
+      "name": "456",
+      "property1": "654",
+      "property2": "",
+      "id": 4
+    }
+  ]
+}

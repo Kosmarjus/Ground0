@@ -15,46 +15,29 @@ function storeInput() {
     let inputProperty1 = document.getElementById('property1').value;
     let inputProperty2 = document.getElementById('property2').value;
 
-    var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
-        return obj.id == targetID;
-    })[0];
+    let newAlbum = {
+        name: inputName,
+        property1: inputProperty1,
+        property2: inputProperty2
+    };
 
-
-    if (typeof result == 'undefined' || typeof result.id == 'undefined' && document.getElementById('img').value == "") { //jei nera irasu - kuriam naujus
-
-        if (document.getElementById('img').value == "") { //jei nera paveiksliuko pasirinkimo/ pushinam i nauja irasa default.png
-
-            dataArray.push({
-                id: uuidv4(),
-                name: inputName,
-                property1: inputProperty1,
-                property2: inputProperty2,
-                image: 'images/default.png'
-            });
-        } else { // jei yra paveiksliuko pasirinkinmas  pushinam i nauja irasa pasirinkima
-            dataArray.push({
-                id: uuidv4(),
-                name: inputName,
-                property1: inputProperty1,
-                property2: inputProperty2,
-                image: 'images/' + document.getElementById('img').files[0].name
-            });
-        }
-
-
-    } else { //jei yra irasas - atnaujinam seno iraso propercius
-
-        result.name = inputName;
-        result.property1 = inputProperty1;
-        result.property2 = inputProperty2;
-
-
-        if (document.getElementById('img').value != "") {
-            result.image = 'images/' + document.getElementById('img').files[0].name;
-        }
+    if (document.getElementById('img').value != "") {
+        newAlbum.image = 'images/' + document.getElementById('img').files[0].name;
     }
 
-    localStorage.setItem('dataArray', JSON.stringify(dataArray)); //stumiam i localstorage
+    fetch("http://localhost:3066/albums", {
+        method: "POST",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(newAlbum)
+    }).then(function (data) {
+        console.log("issaugota sekmingai");
+    }).catch(function (error) {
+        console.log("nepavyko issaugoti", error)
+    })
+    // localStorage.setItem('dataArray', JSON.stringify(dataArray)); //stumiam i localstorage
+
     $('#promptModal').modal('hide'); //ir paslepiap modalini langa 
 }
 
@@ -101,17 +84,16 @@ function clearID() {
 
 // jei yra duomenu data arrayjuje = juos paparsinam ir atspausdinam per print f-ja
 function render() {
-    if (localStorage.getItem('dataArray')) {
-        dataArray = JSON.parse(localStorage.getItem('dataArray'));
+    if (!jQuery.isEmptyObject(dataArray)) {
         printInput();
     }
 }
-render();
+// render();
 
 //f-ja modalinio lango uzpildymui
 function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitikmens paieskai dataArray'uje
     targetID = uniqueNo;
-    dataArray = JSON.parse(localStorage.getItem('dataArray'));
+    // dataArray = JSON.parse(localStorage.getItem('dataArray'));
 
     document.getElementById('promptModalTitle').innerText = 'Įrašo redagavimas';
 
@@ -186,3 +168,19 @@ $("#searchInput").on("keyup", function () {
         $(this).closest('.cardContainer')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
+
+
+
+
+
+loadServerData();
+
+function loadServerData() {
+    fetch("http://localhost:3066/albums").then(function (response) {
+        response.json().then(function (data) {
+            dataArray = data;
+            // console.log(dataArray);
+            render();
+        })
+    });
+}
