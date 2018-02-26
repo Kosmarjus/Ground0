@@ -14,27 +14,44 @@ function storeInput() {
     let inputName = document.getElementById('input').value;
     let inputProperty1 = document.getElementById('property1').value;
     let inputProperty2 = document.getElementById('property2').value;
-    let img = document.getElementById('img').files[0].name;
 
     var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
         return obj.id == targetID;
     })[0];
 
-    if (typeof result == 'undefined' || typeof result.id == 'undefined') { //jei nera irasu - kuriam naujus
-        dataArray.push({
-            id: uuidv4(),
-            name: inputName,
-            property1: inputProperty1,
-            property2: inputProperty2,
-            image: 'images/'+img
-        });
+
+    if (typeof result == 'undefined' || typeof result.id == 'undefined' && document.getElementById('img').value == "") { //jei nera irasu - kuriam naujus
+
+        if (document.getElementById('img').value == "") { //jei nera paveiksliuko pasirinkimo/ pushinam i nauja irasa default.png
+
+            dataArray.push({
+                id: uuidv4(),
+                name: inputName,
+                property1: inputProperty1,
+                property2: inputProperty2,
+                image: 'images/default.png'
+            });
+        } else { // jei yra paveiksliuko pasirinkinmas  pushinam i nauja irasa pasirinkima
+            dataArray.push({
+                id: uuidv4(),
+                name: inputName,
+                property1: inputProperty1,
+                property2: inputProperty2,
+                image: 'images/' + document.getElementById('img').files[0].name
+            });
+        }
+
 
     } else { //jei yra irasas - atnaujinam seno iraso propercius
 
         result.name = inputName;
         result.property1 = inputProperty1;
         result.property2 = inputProperty2;
-        result.image = 'images/'+img;
+
+
+        if (document.getElementById('img').value != "") {
+            result.image = 'images/' + document.getElementById('img').files[0].name;
+        }
     }
 
     localStorage.setItem('dataArray', JSON.stringify(dataArray)); //stumiam i localstorage
@@ -49,14 +66,16 @@ function printInput() {
     for (const entry of dataArray) {
 
         printOut += `
+        <div class="cardContainer">
         <a class="containerBox" data-toggle="modal" href="#promptModal" onclick="populateModal('${entry.id}')"><div> 
-        <ul> Pavadinimas:            ${entry.name}
-            <li> Propertis1: ${entry.property1}</li>
-            <li> Propertis2: ${entry.property2}</li>
-            <img src="${entry.image}">
+        <ul>Atlikėjas: ${entry.name}
+            <li> Albumas: ${entry.property1}</li>
+            <li> Metai: ${entry.property2}</li>
+            <div class="imageContainer"><img src="${entry.image}"></div>
         </ul>
         </div>
         </a>
+        </div>
 `
     }
     destination.innerHTML = printOut;
@@ -69,7 +88,9 @@ function clearInputs() {
     document.getElementById('property2').value = "";
     document.getElementById('img').value = "";
     document.getElementById('deleteButton').style.visibility = 'hidden'; //tuo paciu paslepiam delete mygtuka jei nekoreguojam seno iraso
-    document.getElementById('showimage').style.visibility = 'hidden';
+    document.getElementById('showimage').style.visibility = 'hidden'; //paslepiam modalinio paveiksliuka
+    document.getElementById('promptModalTitle').innerText = 'Naujas įrašas'; //isvalom modalinio pavadinima
+    document.getElementById('searchOnYouTube').style.visibility = 'hidden'; //paslepiam modalinio mygtuka
 }
 
 
@@ -92,6 +113,8 @@ function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitik
     targetID = uniqueNo;
     dataArray = JSON.parse(localStorage.getItem('dataArray'));
 
+    document.getElementById('promptModalTitle').innerText = 'Įrašo redagavimas';
+
     var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
         return obj.id == targetID;
     })[0];
@@ -99,19 +122,22 @@ function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitik
     document.getElementById('input').value = result.name; //priskiriame inputams vertes is dataArray
     document.getElementById('property1').value = result.property1;
     document.getElementById('property2').value = result.property2;
-    // document.getElementById('img').value = result.image;
+
     document.getElementById('showimage').src = result.image;
+
     document.getElementById('deleteButton').style.visibility = 'visible'; //redaguojant irasa - padarome mygtuka delete matoma
-    document.getElementById('showimage').style.visibility = 'visible';
+    document.getElementById('showimage').style.visibility = 'visible'; //redaguojant irasa - paveiksliukas matomas
+
+
+    let getYoutubelink = document.getElementById('searchOnYouTube'); //locate the search on Youtube button
+    getYoutubelink.style.visibility = 'visible';
+    let url = 'https://www.youtube.com/results?search_query=' + result.name + ' ' + result.property1; // generate search query
+    getYoutubelink.href = url;
+    getYoutubelink.target = '_blank';
+
 }
 
-// //funkcija targetID paemimui
-// function getID(e) {
-//     targetID = e.target.id;
-// }
-// //targetID trigeriai
-// document.querySelector('.main').addEventListener('mouseover', getID, false);
-// document.querySelector('.main').addEventListener('focus', getID, true);
+
 
 //trynimo mygtuko funkcija
 function deleteCard() {
@@ -130,7 +156,7 @@ function deleteCard() {
     render(); //atnaujinam ekrana
 }
 
-
+//funkcija automatiniam paveiksliuko rodymui kai jis pasirenkamas
 function renderImage(input) {
     if (input.files && input.files[0]) {
 
@@ -155,8 +181,8 @@ function renderImage(input) {
 //search filter tired of making it work with native JS, adapted some stack overflow JSON black magic
 $("#searchInput").on("keyup", function () {
     var g = $(this).val().toLowerCase();
-    $(".main a div ul").each(function () {
+    $(".main div a div ul").each(function () {
         var s = $(this).text().toLowerCase();
-        $(this).closest('.containerBox')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+        $(this).closest('.cardContainer')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });

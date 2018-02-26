@@ -13,13 +13,15 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container">
 
+  <div class="container">
     <header class="header">
+
       <h2>My whatever incredible collection here</h2>
 
     </header>
@@ -37,8 +39,8 @@
     <main class="main">
 
     </main>
-    <!-- <aside class="aside aside1">im useless</aside>
-    <aside class="aside aside2">im useless too</aside> -->
+    <aside class="aside aside1">im useless</aside>
+    <!-- <aside class="aside aside2">im useless too</aside> -->
     <footer class="footer">
       I'm a footer. I want to be useful someday.
     </footer>
@@ -59,67 +61,59 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="promptModalTitle">Insert stuff here</h5>
+          <h5 class="modal-title" id="promptModalTitle">Naujas įrašas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
+          <form action="">
+            <div class="form-group row">
+              <label for="Artist-text-input" class="col-2 col-form-label">Atlikėjas</label>
+              <div class="col-10">
+                <input class='form-control' id="input" type="text" placeholder="Atlikėjas">
+              </div>
+            </div>
 
 
-          <table class="table">
-
-            <tr>
-
-              <td class="col-md-4">
-                <span>Input name here</span>
-
-              </td>
-
-              <td class="col-md-8">
-                <input id="input" type="text" placeholder="name">
-              </td>
+            <div class="form-group row">
+              <label for="Album-text-input" class="col-2 col-form-label">Albumas</label>
+              <div class="col-10">
+                <input class='form-control' id="property1" type="text" placeholder="Albumas">
+              </div>
+            </div>
 
 
+            <div class="form-group row">
+              <label for="Year-text-input" class="col-2 col-form-label">Metai</label>
+              <div class="col-10">
+                <input class='form-control' id="property2" type="number" min="1900" max="2099" step="1" value="2016">
+              </div>
+            </div>
 
-            </tr>
+            <div class="form-group row">
+              <label for="Artwork-text-input" class="col-2 col-form-label">Artwork</label>
+              <div class="col-10">
+                <input class='form-control' id="img" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="renderImage(this)">
+              </div>
+            </div>
 
-            <tr>
-              <td>
-                <span>First property here</span>
-              </td>
-              <td>
-                <input id="property1" type="text" placeholder="property1">
-              </td>
-            </tr>
+            <div class="youtubeContainer">
+              <img id="showimage" src="#" alt="selected image">
 
-
-            <tr>
-              <td>
-                <span>Second property here</span>
-              </td>
-              <td>
-                <input id="property2" type="text" placeholder="property2">
-              </td>
-            </tr>
-
-            <tr>
-              <td>Image selection here</span>
-              </td>
-              <td>
-                <input id="img" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="renderImage(this)">
-                <img id="showimage" src="#" alt="selected image">
-              </td>
-            </tr>
-
-          </table>
+              <a id="searchOnYouTube" title='Check if the video is available on YouTube'>
+                <i class="fab fa-youtube fa-3x"></i>
+              </a>
+            </div>
 
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" onclick="deleteCard()" id="deleteButton">Ištrinti</button>
-            <button type="button" class="btn btn-primary" onclick="storeInput(), printInput(), clearInputs()">Saugoti</button>
-            <button type="button" class="btn btn-secondary" onclick="render()" data-dismiss="modal">Atšaukti</button>
-          </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" onclick="deleteCard()" id="deleteButton">Ištrinti</button>
+              <button type="button" class="btn btn-primary" onclick="storeInput(), printInput(), clearInputs()">Saugoti</button>
+              <button type="button" class="btn btn-secondary" onclick="render()" data-dismiss="modal">Atšaukti</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

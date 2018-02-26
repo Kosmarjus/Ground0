@@ -4,6 +4,8 @@ body {
 	min-height: 100vh;
 }
 
+/* overflow to fix vertical scrollbar appearing */
+
 .container {
 	display: flex;
 	flex-flow: row wrap;
@@ -15,7 +17,8 @@ body {
 
 header {
 	height: 100px;
-	background-color: aquamarine;
+	background: url('https://i.ytimg.com/vi/gxmHOwWh-i4/maxresdefault.jpg')74% 54% no-repeat;
+	background-size: 21% auto;
 }
 
 .navbar {
@@ -66,35 +69,19 @@ header {
 	display: flex;
 	flex-wrap: wrap;
 	align-content: flex-start;
-}
-
-.main > * {
-	background-color: white;
-	margin: 3px;
-	padding: 5px;
-	height: 344px;
-	box-shadow: 5px 5px 4px #888888;
-	color: black;
-}
-
-.main > *:hover {
-	text-decoration: none;
-	color: black;
-	margin-top: -1px;
-}
-
-.main>*:focus {
-	text-decoration: none;
-	color: black;
-	margin-top: -1px;
+	align-items: flex-start;
 }
 
 .main ul {
 	padding: 0;
 }
- 
+
 .main ul li {
 	list-style: none;
+}
+
+.main img {
+	height: 100px;
 }
 
 .footer {
@@ -111,6 +98,62 @@ header {
 	margin-right: auto;
 }
 
+#searchOnYouTube {
+	visibility: hidden;
+}
+
 #showimage {
 	visibility: hidden;
+	height: 256px;
+}
+
+.fa-youtube {
+	opacity: 0.3;
+	color: #cc181e
+}
+
+#searchOnYouTube:hover .fa-youtube {
+	opacity: 1;
+}
+
+.youtubeContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.cardContainer {
+	justify-content: center;
+	margin: 3px;
+	padding: 5px;
+	box-shadow: 5px 5px 4px #888888;
+	color: black;
+	background-color: white;
+	text-decoration: none;
+}
+
+.cardContainer:hover {
+	margin-top: -1px;
+}
+
+.cardContainer:focus {
+	margin-top: -1px;
+}
+
+.cardContainer a {
+	color: black;
+}
+
+.cardContainer a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+.cardContainer a:focus {
+	text-decoration: none;
+	color: black;
+}
+
+.imageContainer img {
+	display: block;
+	margin: auto;
 }
