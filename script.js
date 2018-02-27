@@ -35,8 +35,8 @@ function createNewEntry() {
         console.log("Įrašas sukurtas sekmingai");
         loadServerData();
     }).catch(function (error) {
-        console.log("Įrašo nepavyko išsaugoti", error)
-    })
+        console.log("Įrašo nepavyko išsaugoti", error);
+    });
 
     clearInputs();  //išvalom laukus
     $('#promptModal').modal('hide'); //ir paslepiap modalini langa 
@@ -59,7 +59,7 @@ function printInput() {
         </div>
         </a>
         </div>
-`
+`;
     }
     destination.innerHTML = printOut;
 }
@@ -143,8 +143,8 @@ function updateEntry() {
         loadServerData();
         clearInputs();
     }).catch(function (error) {
-        console.log("nepavyko Atnaujinti", error)
-    })
+        console.log("nepavyko Atnaujinti", error);
+    });
     $('#promptModal').modal('hide');
     document.getElementById('saveButton').removeEventListener('click', updateEntry); //po pakeitimo pasaliname event listeneri
 }
@@ -164,8 +164,8 @@ function deleteCard() {
             clearInputs();
 
         }).catch(function (error) {
-            console.log("nepavyko ištrinti", error)
-        })
+            console.log("nepavyko ištrinti", error);
+        });
      }
     $('#promptModal').modal('hide'); //slepiam modalini langa po mygtuko paspaudimo
 }
