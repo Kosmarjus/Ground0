@@ -1,56 +1,116 @@
 {
   "albums": [
     {
-      "id": 1,
-      "name": "atlikejas",
-      "property1": "albumas",
-      "property2": "metai",
+      "name": "",
+      "property1": "",
+      "property2": "1902",
+      "id": 3,
       "image": "images/default.png"
     },
     {
-      "name": "456",
-      "property1": "654",
-      "property2": "654",
-      "image": "images/4.png",
-      "id": 2
-    },
-    {
-      "name": "tets",
-      "property1": "fgh",
-      "property2": "",
-      "id": 3
-    },
-    {
-      "name": "456",
-      "property1": "654",
-      "property2": "",
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
       "id": 4
     },
     {
       "name": "",
       "property1": "",
-      "property2": "",
-      "id": 5
+      "property2": "2015",
+      "image": "images/default.png",
+      "id": 8
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 17
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 18
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 19
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 21
     },
     {
       "name": "",
       "property1": "",
       "property2": "",
-      "id": 6
+      "image": "images/default.png",
+      "id": 22
     },
     {
-      "name": "456",
-      "property1": "654",
-      "property2": "654",
-      "image": "images/2.png",
-      "id": 7
-    },
-    {
-      "name": "tets",
-      "property1": "fgh",
+      "name": "",
+      "property1": "",
       "property2": "",
       "image": "images/default.png",
-      "id": 8
+      "id": 25
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 28
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 29
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 30
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 31
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 32
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "2016",
+      "image": "images/default.png",
+      "id": 33
+    },
+    {
+      "name": "",
+      "property1": "",
+      "property2": "",
+      "image": "images/default.png",
+      "id": 35
     }
   ]
 }

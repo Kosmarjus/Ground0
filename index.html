@@ -31,7 +31,7 @@
       <input type="text" name="" id="searchInput" placeholder="Search filter here">
       <!-- <button type="button" class="btn btn-primary" onclick="search()">Ieškoti</button> -->
       <!-- Button trigger modal -->
-      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="clearInputs(), clearID()">Create stuff</button>
+      <button type="button" id="creatorButton" class="btn btn-primary" data-toggle="modal" data-target="#promptModal" onclick="createListener()">Create stuff</button>
 
     </div>
 
@@ -109,9 +109,9 @@
 
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" onclick="deleteCard()" id="deleteButton">Ištrinti</button>
-              <button type="button" class="btn btn-primary" onclick="storeInput(), printInput(), clearInputs(), render()">Saugoti</button>
-              <button type="button" class="btn btn-secondary" onclick="render()" data-dismiss="modal">Atšaukti</button>
+              <button type="button" class="btn btn-danger" onclick="deleteCard(), clearInputs()" id="deleteButton">Ištrinti</button>
+              <button type="button" class="btn btn-primary" id="saveButton">Saugoti</button>
+              <button type="button" class="btn btn-secondary" onclick="clearInputs()" data-dismiss="modal">Atšaukti</button>
             </div>
           </form>
         </div>

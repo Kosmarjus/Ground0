@@ -1,46 +1,63 @@
 let dataArray = [],
     targetID = '';
 
-    //Sukuriu mygtuko "issaugoti" listeneri - iraso sukurimo scenarijui, paspaudus ant sukurti mygtuko
-    function createListener() {
-        document.getElementById('saveButton').addEventListener('click', createNewEntry);
-    }
-    
-    //f-ja irasu kurimui
-function createNewEntry() {
+//random ID generatorius (specialiai Andriui vietoje timestamp'o)
+function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+}
 
-    let inputName = document.getElementById('input').value; //pasiimame modalinio lango inputu reiksmes
+//f-ja irasu issaugojimui i localstorage
+function storeInput() {
+
+    let inputName = document.getElementById('input').value;
     let inputProperty1 = document.getElementById('property1').value;
     let inputProperty2 = document.getElementById('property2').value;
 
-    let newEntry = {}; //naujas kintamas kuri kelsim i db ir jo parametrai
-    newEntry.name = inputName;
-    newEntry.property1 = inputProperty1;
-    newEntry.property2 = inputProperty2;
+    var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
+        return obj.id == targetID;
+    })[0];
 
-    if (document.getElementById('img').value == "") { //jei nera paveiksliuko pasirinkimo/ pushinam i nauja irasa default.png
-        newEntry.image = 'images/default.png';
 
-    } else { // jei yra paveiksliuko pasirinkinmas  pushinam i nauja irasa pasirinkima
-        newEntry.image = 'images/' + document.getElementById('img').files[0].name;
+    if (typeof result == 'undefined' || typeof result.id == 'undefined' && document.getElementById('img').value == "") { //jei nera irasu - kuriam naujus
+
+        if (document.getElementById('img').value == "") { //jei nera paveiksliuko pasirinkimo/ pushinam i nauja irasa default.png
+
+            dataArray.push({
+                id: uuidv4(),
+                name: inputName,
+                property1: inputProperty1,
+                property2: inputProperty2,
+                image: 'images/default.png'
+            });
+        } else { // jei yra paveiksliuko pasirinkinmas  pushinam i nauja irasa pasirinkima
+            dataArray.push({
+                id: uuidv4(),
+                name: inputName,
+                property1: inputProperty1,
+                property2: inputProperty2,
+                image: 'images/' + document.getElementById('img').files[0].name
+            });
+        }
+
+
+    } else { //jei yra irasas - atnaujinam seno iraso propercius
+
+        result.name = inputName;
+        result.property1 = inputProperty1;
+        result.property2 = inputProperty2;
+
+
+        if (document.getElementById('img').value != "") {
+            result.image = 'images/' + document.getElementById('img').files[0].name;
+        }
     }
 
-    fetch("http://localhost:3000/albums", { // pushinam nauja irasa i db
-        method: "POST",
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(newEntry)
-    }).then(function (data) {
-        console.log("Įrašas sukurtas sekmingai");
-        loadServerData();
-    }).catch(function (error) {
-        console.log("Įrašo nepavyko išsaugoti", error)
-    })
-
-    clearInputs();  //išvalom laukus
+    localStorage.setItem('dataArray', JSON.stringify(dataArray)); //stumiam i localstorage
     $('#promptModal').modal('hide'); //ir paslepiap modalini langa 
 }
+
 
 //f-ja irasu spausdinimui i .main klase
 function printInput() {
@@ -74,25 +91,28 @@ function clearInputs() {
     document.getElementById('showimage').style.visibility = 'hidden'; //paslepiam modalinio paveiksliuka
     document.getElementById('promptModalTitle').innerText = 'Naujas įrašas'; //isvalom modalinio pavadinima
     document.getElementById('searchOnYouTube').style.visibility = 'hidden'; //paslepiam modalinio mygtuka
-       targetID = ''; //nuresetinam targetID (jei bus kuriamas naujas irasas)
-    document.getElementById('saveButton').removeEventListener('click', createNewEntry); //pasalinam listenerius, kadangi naudojame viena mygtuka abiem atvejais
-    document.getElementById('saveButton').removeEventListener('click', updateEntry);
 }
 
 
+//funkcija seno irasyto ID istrynimui kai kuriamas naujas irasas
+function clearID() {
+    targetID = ''
+}
 
-// jei yra duomenu db = juos atspausdinam per print f-ja
+// jei yra duomenu data arrayjuje = juos paparsinam ir atspausdinam per print f-ja
 function render() {
     if (dataArray) {
-        printInput();
+               printInput();
     }
 }
+// render();
 
 //f-ja modalinio lango uzpildymui
-function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitikmens paieskai db
+function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitikmens paieskai dataArray'uje
     targetID = uniqueNo;
-    
-    document.getElementById('promptModalTitle').innerText = 'Įrašo redagavimas'; //pakeičiam pavadinimą jei redaguojam įrašą
+    dataArray = JSON.parse(localStorage.getItem('dataArray'));
+
+    document.getElementById('promptModalTitle').innerText = 'Įrašo redagavimas';
 
     var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
         return obj.id == targetID;
@@ -101,7 +121,9 @@ function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitik
     document.getElementById('input').value = result.name; //priskiriame inputams vertes is dataArray
     document.getElementById('property1').value = result.property1;
     document.getElementById('property2').value = result.property2;
+
     document.getElementById('showimage').src = result.image;
+
     document.getElementById('deleteButton').style.visibility = 'visible'; //redaguojant irasa - padarome mygtuka delete matoma
     document.getElementById('showimage').style.visibility = 'visible'; //redaguojant irasa - paveiksliukas matomas
 
@@ -110,44 +132,10 @@ function populateModal(uniqueNo) { //panaudojam funkcijos parametro value atitik
     getYoutubelink.style.visibility = 'visible';
     let url = 'https://www.youtube.com/results?search_query=' + result.name + ' ' + result.property1; // generate search query
     getYoutubelink.href = url;
-    getYoutubelink.target = '_blank'; 
+    getYoutubelink.target = '_blank';
 
-    document.getElementById('saveButton').addEventListener('click', updateEntry); //priskiriam listeneri save mygtukui - kad vaziuotu redagavimo scenarijus
 }
 
-
-//iraso keitimo f-ja
-function updateEntry() {
-
-    let inputName = document.getElementById('input').value; 
-    let inputProperty1 = document.getElementById('property1').value;
-    let inputProperty2 = document.getElementById('property2').value;
-    let newEntry = {};
-
-    newEntry.name = inputName;
-    newEntry.property1 = inputProperty1;
-    newEntry.property2 = inputProperty2;
-
-    if (document.getElementById('img').value != "") { //paveiksliuko keitimas truputi kitaip nei iraso kurime - jei pasirenkame paveiksliuka - ji ir pusiname
-        newEntry.image = 'images/' + document.getElementById('img').files[0].name;
-    }
-
-    fetch("http://localhost:3000/albums/" + targetID, { //patch metodas, su nuoroda i iraso ID (pagal json db API)
-        method: "PATCH",
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(newEntry)
-    }).then(function (data) {
-        console.log("Atnaujinta sekmingai");
-        loadServerData();
-        clearInputs();
-    }).catch(function (error) {
-        console.log("nepavyko Atnaujinti", error)
-    })
-    $('#promptModal').modal('hide');
-    document.getElementById('saveButton').removeEventListener('click', updateEntry); //po pakeitimo pasaliname event listeneri
-}
 
 
 //trynimo mygtuko funkcija
@@ -156,18 +144,15 @@ function deleteCard() {
     let confirmation = confirm('Ar tikrai norite ištrinti šią kortelę?');
     if (confirmation == true) {
 
-        fetch("http://localhost:3000/albums/" + targetID, { //DELETE metodas iraso trynimui
-            method: "DELETE"
-        }).then(function (data) {
-            console.log("Ištrinta sekmingai");
-            loadServerData();
-            clearInputs();
+        var result = dataArray.filter(function (obj) { //f-ja objekto atrinkimui pagal dabartini ID
+            return obj.id == targetID;
+        })[0];
 
-        }).catch(function (error) {
-            console.log("nepavyko ištrinti", error)
-        })
-     }
+        dataArray.splice(dataArray.findIndex(p => p.id == result.id), 1); //trinam irasa surasdami jo pozicija arrajuje pagal jame esancio ID verte (haha!)
+        localStorage.setItem('dataArray', JSON.stringify(dataArray)); //irasom nauja arraju
+    }
     $('#promptModal').modal('hide'); //slepiam modalini langa po mygtuko paspaudimo
+    render(); //atnaujinam ekrana
 }
 
 //funkcija automatiniam paveiksliuko rodymui kai jis pasirenkamas
@@ -202,13 +187,15 @@ $("#searchInput").on("keyup", function () {
 });
 
 
+
 loadServerData();
 
 function loadServerData() {
     fetch("http://localhost:3000/albums").then(function (response) {
         response.json().then(function (data) {
             dataArray = data;
+            // console.log(dataArray);
             render();
-        });
+        })
     });
 }
